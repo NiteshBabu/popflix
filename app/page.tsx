@@ -25,8 +25,6 @@ const Home = () => {
     })()
   }, [timeWindow])
 
-  console.log(data)
-
   return (
     <Container maxW={'container.xl'}>
       <Flex alignItems={'baseline'} gap={'4'} my={'10'}>
@@ -76,7 +74,6 @@ const Home = () => {
               loading={loading}
               key={item?.id}
               item={item}
-              type={item?.media_type}
             />
           ))}
       </Grid>
