@@ -13,7 +13,7 @@ const CardComponent = ({
 }) => {
   if (loading) return <Skeleton height={300} />
   return (
-    <Link href="#">
+    <Link href={item.media_type+ "/" + item.id} style={{ cursor : "pointer"}}>
       <Box
         position={'relative'}
         transform={'scale(1)'}
