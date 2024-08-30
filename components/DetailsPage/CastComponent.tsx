@@ -1,41 +1,24 @@
 import {
   Box,
-  Button,
   Flex,
+  Grid,
   Heading,
   Image,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay,
   Text,
 } from '@chakra-ui/react'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { fetchPerson, imagePath } from '../../services/api'
 import type { Cast } from '../../utils/types'
-import CardComponent from '../CardComponent'
-import DetailsComponent from './DetailsComponent'
 import PeopleComponent from '../PeopleComponent'
 
 function Cast({ cast }: { cast: Cast[] }) {
   const [isOpen, setIsOpen] = useState(false)
-  const currentCast = useRef<Cast | null>(cast[0] || null)
-  const [castDetails, setcastDetails] = useState<Cast>()
-
-  useEffect(() => {
-    if (currentCast.current?.name) {
-      ;(async () => {
-        const castDetail = await fetchPerson(currentCast.current.name)
-        setcastDetails(castDetail.results[0])
-      })()
-    }
-  }, [currentCast.current])
-
-  console.log(castDetails)
-
+  const [currentCast, setCurrentCast] = useState<number>(cast[0].id)
   return (
     <>
       <Heading as="h2" fontSize={'md'} textTransform={'uppercase'} mt="10">
@@ -57,8 +40,7 @@ function Cast({ cast }: { cast: Cast[] }) {
               textAlign={'center'}
               onClick={() => {
                 setIsOpen(true)
-                currentCast.current = item
-                setcastDetails(null)
+                setCurrentCast(item?.id)
               }}
             >
               <Image
@@ -68,32 +50,29 @@ function Cast({ cast }: { cast: Cast[] }) {
                 objectFit={'cover'}
                 borderRadius={'sm'}
               />
-              <Text>{item.character} </Text>
-              <Text as={'span'} fontSize={'x-small'}>
-                played by
-              </Text>{' '}
-              <Text>{item?.name}</Text>
+              <Text fontWeight={'bold'} my={1}>
+                {item?.name}
+              </Text>
+              <Text>{item.character}</Text>
             </Box>
             // </Link>
           ))}
       </Flex>
 
-      {castDetails && (
-        <Modal
-          onClose={() => setIsOpen(false)}
-          isOpen={isOpen}
-          scrollBehavior="inside"
-          size="8xl"
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalCloseButton />
-            <ModalBody>
-              <PeopleComponent details={castDetails} />
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-      )}
+      <Modal
+        onClose={() => setIsOpen(false)}
+        isOpen={isOpen}
+        scrollBehavior="inside"
+        size="full"
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody p={0}>
+            <PeopleComponent currentCast={currentCast} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </>
   )
 }

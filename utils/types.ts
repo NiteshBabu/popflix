@@ -33,38 +33,36 @@ const Cast = z.object({
   order: z.number(),
 })
 const CastDetails = z.object({
+  also_known_as: z.array(z.string()),
+  biography: z.string(),
+  birthday: z.string(),
   gender: z.number(),
+  homepage: z.null(),
   id: z.number(),
+  imdb_id: z.string(),
   known_for_department: z.string(),
   name: z.string(),
-  original_name: z.string(),
+  place_of_birth: z.string(),
   popularity: z.number(),
   profile_path: z.string(),
-  known_for: z.array(
+  profiles: z.array(
     z.object({
-      backdrop_path: z.string(),
-      id: z.number(),
-      title: z.string(),
-      original_title: z.string(),
-      overview: z.string(),
-      poster_path: z.string(),
-      media_type: z.string(),
-      adult: z.boolean(),
-      original_language: z.string(),
-      genre_ids: z.array(z.number()),
-      popularity: z.number(),
-      release_date: z.string(),
-      video: z.boolean(),
+      aspect_ratio: z.number(),
+      height: z.number(),
+      iso_639_1: z.null(),
+      file_path: z.string(),
       vote_average: z.number(),
       vote_count: z.number(),
+      width: z.number(),
     })
   ),
-})
+});
 
 const Details = z.object({
   name: z.string(),
   backdrop_path: z.string(),
   belongs_to_collection: z.null(),
+  birthday: z.string(),
   budget: z.number(),
   first_air_date: z.string(),
   genres: z.array(z.object({ id: z.number(), name: z.string() })),
