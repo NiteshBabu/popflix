@@ -1,12 +1,13 @@
 import axios from 'axios'
 
+
 export const imagePath = 'https://image.tmdb.org/t/p/w500'
 export const imagePathOriginal = 'https://image.tmdb.org/t/p/original'
 
 const baseUrl = 'https://api.themoviedb.org/3'
 const apiKey = process.env.NEXT_PUBLIC_TMDB_KEY
 
-// fetch trending
+// TRENDING
 export const fetchTrending = async (timeWindow = 'day') => {
   let results, error
   try {
@@ -23,9 +24,34 @@ export const fetchTrending = async (timeWindow = 'day') => {
 
   return { results, error }
 }
-// fetch details
+
+// DETAILS
 export const fetchDetails = async (type, id) => {
-  const res = await axios.get(`${baseUrl}/${type}/${id}?api_key=${apiKey}`)
-  return res?.data
+  const resp = await axios.get(`${baseUrl}/${type}/${id}?api_key=${apiKey}`)
+  return resp?.data
 }
 
+// CREDITS
+export const fetchCredits = async (type, id) => {
+  const resp = await axios.get(
+    `${baseUrl}/${type}/${id}/credits?api_key=${apiKey}`
+  )
+  return resp?.data
+}
+
+
+// MOVIES & SERIES - Videos
+export const fetchVideos = async (type, id) => {
+  const resp = await axios.get(
+    `${baseUrl}/${type}/${id}/videos?api_key=${apiKey}`
+  )
+  return resp?.data
+}
+
+// SEARCH
+export const searchData = async (query, page) => {
+  const resp = await axios.get(
+    `${baseUrl}/search/multi?api_key=${apiKey}&query=${query}&page=${page}`
+  )
+  return resp?.data
+}
