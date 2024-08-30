@@ -1,5 +1,5 @@
 import Theme from '../common/Theme'
-
+import '../global.css'
 export default function RootLayout({
   children,
 }: {
