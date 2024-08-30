@@ -22,13 +22,13 @@ import PeopleComponent from '../PeopleComponent'
 
 function Cast({ cast }: { cast: Cast[] }) {
   const [isOpen, setIsOpen] = useState(false)
-  const currentCast = useRef<Cast | []>(cast[0] || [])
+  const currentCast = useRef<Cast | null>(cast[0] || null)
   const [castDetails, setcastDetails] = useState<Cast>()
 
   useEffect(() => {
     if (currentCast.current?.name) {
       ;(async () => {
-        const castDetail = await fetchPerson(currentCast.current?.name)
+        const castDetail = await fetchPerson(currentCast.current.name)
         setcastDetails(castDetail.results[0])
       })()
     }
