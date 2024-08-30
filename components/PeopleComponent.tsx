@@ -5,14 +5,8 @@ import {
   TimeIcon,
 } from '@chakra-ui/icons'
 import {
-  Badge,
   Box,
-  Button,
-  CircularProgress,
-  CircularProgressLabel,
-  Container,
   Flex,
-  Grid,
   Heading,
   Image,
   Skeleton,
@@ -20,17 +14,10 @@ import {
 } from '@chakra-ui/react'
 import React, { Suspense } from 'react'
 import { imagePath, imagePathOriginal } from '../services/api'
-import {
-  minutesTohours,
-  ratingToPercentage,
-  resolveRatingColor,
-} from '../utils/helpers'
 import { CastDetails } from '../utils/types'
 import CardComponent from './CardComponent'
 
 function PeopleComponent({ details }: { details: CastDetails }) {
-  console.log({ details })
-
   return (
     <Box>
       <Box
@@ -66,33 +53,9 @@ function PeopleComponent({ details }: { details: CastDetails }) {
                 <Flex alignItems={'center'}>
                   <CalendarIcon mr={2} color={'gray.400'} />
                 </Flex>
-                <Text
-                  as="span"
-                  fontWeight={'normal'}
-                  fontSize={'sm'}
-                  color={'gray.100'}
-                >
-                  {details?.status}
-                </Text>
               </Flex>
             </Flex>
             <Flex alignItems={'center'} gap={'4'}>
-              <CircularProgress
-                value={+ratingToPercentage(details?.vote_average)}
-                bg={'gray.800'}
-                borderRadius={'full'}
-                p={'0.5'}
-                size={'70px'}
-                color={resolveRatingColor(details?.vote_average)}
-                thickness={'6px'}
-              >
-                <CircularProgressLabel fontSize={'lg'}>
-                  {ratingToPercentage(details?.vote_average)}{' '}
-                  <Box as="span" fontSize={'10px'}>
-                    %
-                  </Box>
-                </CircularProgressLabel>
-              </CircularProgress>
               <Text display={{ base: 'none', md: 'initial' }}>User Score</Text>
             </Flex>
             <Text
@@ -102,21 +65,12 @@ function PeopleComponent({ details }: { details: CastDetails }) {
               my="5"
               fontWeight={'bold'}
             >
-              {details?.tagline}
             </Text>
             <Heading fontSize={'xl'} mb={'3'}>
               Overview
             </Heading>
-            <Text fontSize={'md'} mb={'3'}>
-              {details?.overview}
+            <Text fontSize={'md'} mb={'3'}>Some Info
             </Text>
-            <Flex mt="6" gap="2">
-              {details?.genres?.map((genre) => (
-                <Badge key={genre?.id} p="1">
-                  {genre?.name}
-                </Badge>
-              ))}
-            </Flex>
           </Box>
         </Flex>
       </Box>
