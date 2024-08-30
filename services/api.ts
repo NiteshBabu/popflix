@@ -55,3 +55,10 @@ export const searchData = async (query, page) => {
   )
   return resp?.data
 }
+// PERSON
+export const fetchPerson = async (query, page=1) => {
+  const resp = await axios.get(
+    `${baseUrl}/search/person?api_key=${apiKey}&query=${query}&page=${page}`
+  )
+  return resp?.data
+}

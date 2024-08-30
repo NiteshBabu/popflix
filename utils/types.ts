@@ -20,6 +20,46 @@ const TMDBResponseSchema = z.object({
   vote_count: z.number(),
 })
 
+const Cast = z.object({
+  gender: z.number(),
+  id: z.number(),
+  known_for_department: z.string(),
+  name: z.string(),
+  original_name: z.string(),
+  popularity: z.number(),
+  profile_path: z.string(),
+  character: z.string(),
+  credit_id: z.string(),
+  order: z.number(),
+})
+const CastDetails = z.object({
+  gender: z.number(),
+  id: z.number(),
+  known_for_department: z.string(),
+  name: z.string(),
+  original_name: z.string(),
+  popularity: z.number(),
+  profile_path: z.string(),
+  known_for: z.array(
+    z.object({
+      backdrop_path: z.string(),
+      id: z.number(),
+      title: z.string(),
+      original_title: z.string(),
+      overview: z.string(),
+      poster_path: z.string(),
+      media_type: z.string(),
+      adult: z.boolean(),
+      original_language: z.string(),
+      genre_ids: z.array(z.number()),
+      popularity: z.number(),
+      release_date: z.string(),
+      video: z.boolean(),
+      vote_average: z.number(),
+      vote_count: z.number(),
+    })
+  ),
+})
 
 const Details = z.object({
   name: z.string(),
@@ -76,4 +116,6 @@ const Details = z.object({
 
 // inferred types
 export type TMDBResponseType = z.infer<typeof TMDBResponseSchema>
+export type Cast = z.infer<typeof Cast>
+export type CastDetails = z.infer<typeof CastDetails>
 export type Details = z.infer<typeof Details>

@@ -13,7 +13,7 @@ const CardComponent = ({
 }) => {
   if (loading) return <Skeleton height={300} />
   return (
-    <Link href={item.media_type+ "/" + item.id} style={{ cursor : "pointer"}}>
+    <Link href={`/${item.media_type}/${item.id}`} style={{ cursor: 'pointer' }}>
       <Box
         position={'relative'}
         transform={'scale(1)'}
@@ -22,7 +22,7 @@ const CardComponent = ({
           transition: 'transform 0.2s ease-in-out',
           zIndex: '10',
           '& .overlay': {
-            height: '33%',
+            height: '30%',
             opacity: 1,
           },
         }}
@@ -58,11 +58,23 @@ const CardComponent = ({
               item?.release_date || item?.first_air_date
             ).getFullYear() || 'N/A'}
           </Text>
-          <Flex alignItems={'center'} justifyContent={'center'} gap={2} mt="4">
-            <StarIcon fontSize={'small'} fill={'tomato'} />
-            <Text>{item?.vote_average?.toFixed(1)}</Text>
-          </Flex>
         </Box>
+        <Flex
+          alignItems={'center'}
+          justifyContent={'center'}
+          gap={1}
+          mt="2"
+          mr="2"
+          pos={'absolute'}
+          top={0}
+          right={0}
+          p={'3px 6px'}
+          borderRadius={5}
+          bg={'rgba(0,0,0,0.4)'}
+        >
+          <StarIcon fontSize={'small'} fill={'tomato'} />
+          <Text fontSize={'small'}>{item?.vote_average?.toFixed(1)}</Text>
+        </Flex>
       </Box>
     </Link>
   )
