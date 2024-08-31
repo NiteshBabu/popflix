@@ -100,11 +100,7 @@ const Search = ({ searchParams }) => {
             isLoading ? (
               <Skeleton height={300} key={i} />
             ) : (
-              <CardComponent
-                key={item?.id}
-                item={item}
-                type={item?.media_type}
-              />
+              <CardComponent key={item?.id} item={item} />
             )
           )}
         </Grid>
