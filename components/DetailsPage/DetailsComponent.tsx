@@ -16,8 +16,15 @@ import {
   Image,
   Skeleton,
   Text,
+  useToast,
 } from '@chakra-ui/react'
-import React, { Dispatch, SetStateAction, Suspense } from 'react'
+import React, {
+  Dispatch,
+  SetStateAction,
+  Suspense,
+  useEffect,
+  useState,
+} from 'react'
 import { imagePath, imagePathOriginal } from '../../services/api'
 import {
   minutesTohours,
@@ -25,18 +32,66 @@ import {
   resolveRatingColor,
 } from '../../utils/helpers'
 import { Details } from '../../utils/types'
+import { useFirestore } from '../../services/firestore'
+import { useAuth } from '../../context/useAuth'
 
 function DetailsComponent({
   details,
   type,
-  isInWatchlist,
-  setIsInWatchlist,
 }: {
   details: Details
   type: string
-  isInWatchlist: boolean
-  setIsInWatchlist: Dispatch<SetStateAction<boolean>>
 }) {
+  const { id: itemId } = details
+  const { user } = useAuth()
+  const [isInWatchlist, setIsInWatchlist] = useState(false)
+
+  const { addToWatchlist, checkIfInWatchlist, removeFromWatchlist } =
+    useFirestore()
+  const toast = useToast()
+
+  const handleSaveToWatchlist = async () => {
+    if (!user) {
+      toast({
+        title: 'Login to add to watchlist',
+        status: 'error',
+        isClosable: true,
+      })
+      return
+    }
+
+    const data = {
+      id: details?.id,
+      title: details?.title || details?.name,
+      media_type: type,
+      poster_path: details?.poster_path,
+      release_date: details?.release_date || details?.first_air_date,
+      vote_average: details?.vote_average,
+      overview: details?.overview,
+    }
+
+    const dataId = details?.id?.toString()
+    await addToWatchlist(user?.uid, dataId, data)
+    const isSetToWatchlist = await checkIfInWatchlist(user?.uid, dataId)
+    setIsInWatchlist(isSetToWatchlist)
+  }
+
+  useEffect(() => {
+    if (!user) {
+      setIsInWatchlist(false)
+      return
+    }
+
+    checkIfInWatchlist(user?.uid, itemId).then((data) => {
+      setIsInWatchlist(data)
+    })
+  }, [itemId, user, checkIfInWatchlist])
+
+  const handleRemoveFromWatchlist = async () => {
+    await removeFromWatchlist(user?.uid, itemId)
+    const isSetToWatchlist = await checkIfInWatchlist(user?.uid, itemId)
+    setIsInWatchlist(isSetToWatchlist)
+  }
   const title = details?.title || details?.name
   const releaseDate =
     type === 'tv' ? details?.first_air_date : details?.release_date
@@ -135,7 +190,11 @@ function DetailsComponent({
                   In watchlist
                 </Button>
               ) : (
-                <Button leftIcon={<SmallAddIcon />} variant={'outline'}>
+                <Button
+                  leftIcon={<SmallAddIcon />}
+                  variant={'outline'}
+                  onClick={handleSaveToWatchlist}
+                >
                   Add to watchlist
                 </Button>
               )}

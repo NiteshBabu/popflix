@@ -1,6 +1,8 @@
+import { Suspense } from 'react'
 import Theme from '../common/Theme'
 import '../global.css'
 import Navbar from '../components/Navbar'
+import { AuthProvider } from '../context/authProvider'
 export default function RootLayout({
   children,
 }: {
@@ -10,8 +12,10 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Theme>
-          <Navbar />
-         {children}
+          <AuthProvider>
+            <Navbar />
+            <Suspense fallback="Fetching....">{children}</Suspense>
+          </AuthProvider>
         </Theme>
       </body>
     </html>

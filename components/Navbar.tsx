@@ -7,6 +7,7 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
+  DrawerHeader,
   DrawerOverlay,
   Flex,
   IconButton,
@@ -18,11 +19,20 @@ import {
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
+import { useAuth } from '../context/useAuth'
 
 const Navbar = () => {
   const { onOpen, isOpen, onClose } = useDisclosure()
-  const user = {
-    email: 'niteshbabu@gmail.com',
+
+  const { user, signInWithGoogle, logout } = useAuth()
+
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithGoogle()
+      console.log('success')
+    } catch (error) {
+      console.log('errr', error)
+    }
   }
   return (
     <Box py="4" mb="2">
@@ -59,18 +69,24 @@ const Navbar = () => {
                     bg={'red.500'}
                     color={'white'}
                     size={'sm'}
-                    name={user?.email}
+                    name={user?.displayName || user?.email}
                   />
                 </MenuButton>
                 <MenuList>
                   <Link href="/watchlist">
                     <MenuItem>Watchlist</MenuItem>
                   </Link>
-                  <MenuItem onClick={() => console.log('Todo Logout')}>
-                    Logout
-                  </MenuItem>
+                  <MenuItem onClick={logout}>Logout</MenuItem>
                 </MenuList>
               </Menu>
+            )}
+            {!user && (
+              <Avatar
+                size={'sm'}
+                bg={'gray.800'}
+                as="button"
+                onClick={handleGoogleLogin}
+              />
             )}
           </Flex>
 
@@ -83,17 +99,41 @@ const Navbar = () => {
             <Link href="/search">
               <SearchIcon fontSize={'xl'} />
             </Link>
-            <IconButton onClick={onOpen} icon={<HamburgerIcon />} aria-label='Menu Toggle' />
+            <IconButton
+              onClick={onOpen}
+              icon={<HamburgerIcon />}
+              aria-label="Menu Toggle"
+            />
             <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
               <DrawerOverlay />
               <DrawerContent bg={'black'}>
                 <DrawerCloseButton />
-
+                <DrawerHeader>
+                  {user ? (
+                    <Flex alignItems="center" gap="2">
+                      <Avatar
+                        bg="red.500"
+                        size={'sm'}
+                        name={user?.displayName || user?.email}
+                      />
+                      <Box fontSize={'sm'}>
+                        {user?.displayName || user?.email}
+                      </Box>
+                    </Flex>
+                  ) : (
+                    <Avatar
+                      size={'sm'}
+                      bg="gray.800"
+                      as="button"
+                      onClick={handleGoogleLogin}
+                    />
+                  )}
+                </DrawerHeader>
                 <DrawerBody>
                   <Flex flexDirection={'column'} gap={'4'} onClick={onClose}>
                     <Link href="/">Home</Link>
                     <Link href="/movies">Movies</Link>
-                    <Link href="/shows">TV Shows</Link>
+                    <Link href="/shows">Shows</Link>
                   </Flex>
                 </DrawerBody>
               </DrawerContent>
