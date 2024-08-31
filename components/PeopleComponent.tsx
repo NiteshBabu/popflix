@@ -10,6 +10,7 @@ import {
   Heading,
   Image,
   Skeleton,
+  Spinner,
   Text,
 } from '@chakra-ui/react'
 import React, { Suspense, useEffect, useState } from 'react'

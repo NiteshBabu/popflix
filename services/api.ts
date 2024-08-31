@@ -55,10 +55,16 @@ export const searchData = async (query, page) => {
   )
   return resp?.data
 }
+
 // PERSON
-export const fetchPerson = async (query, page=1) => {
-  const resp = await axios.get(
-    `${baseUrl}/search/person?api_key=${apiKey}&query=${query}&page=${page}`
+export const fetchPerson = async (id) => {
+  const resp = await axios.get(`${baseUrl}/person/${id}?api_key=${apiKey}`)
+  const combinedCredits = await axios.get(
+    `${baseUrl}/person/${id}/combined_credits?api_key=${apiKey}`
   )
-  return resp?.data
+  const images = await axios.get(
+    `${baseUrl}/person/${id}/images?api_key=${apiKey}`
+  )
+  
+  return { ...resp?.data, ...combinedCredits?.data, ...images.data }
 }

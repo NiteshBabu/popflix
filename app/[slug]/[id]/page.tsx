@@ -1,9 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Box, Container, Flex, Spinner } from '@chakra-ui/react'
-import { fetchCredits, fetchDetails} from '../../../services/api'
+import { Box, Container } from '@chakra-ui/react'
+import { fetchCredits, fetchDetails } from '../../../services/api'
 import DetailsComponent from '../../../components/DetailsPage/DetailsComponent'
 import Cast from '../../../components/DetailsPage/CastComponent'
+import FullSpinner from '../../../components/FullSpinner'
 
 const DetailsPage = ({ params }) => {
   const { slug: type, id } = params
@@ -29,12 +30,7 @@ const DetailsPage = ({ params }) => {
     })()
   }, [type, id])
 
-  if (loading)
-    return (
-      <Box pos={'absolute'} height={'100%'} width={'100%'} bg={'tomato'}>
-        <Spinner size={'xl'} color="red" />
-      </Box>
-    )
+  if (loading) return <FullSpinner />
 
   return (
     <Box>
