@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { useFirestore } from '../../services/firestore'
 import { useAuth } from '../../context/useAuth'
 import { Container, Flex, Grid, Heading, Spinner } from '@chakra-ui/react'
-import WatchlistCard from '../../components/WatchlistCard'
 import CardComponent from '../../components/CardComponent'
 
 const Watchlist = () => {
