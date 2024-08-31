@@ -49,7 +49,7 @@ export const fetchVideos = async (type, id) => {
 }
 
 // SEARCH
-export const searchData = async (query, page) => {
+export const fetchMultiSearch = async (query, page) => {
   const resp = await axios.get(
     `${baseUrl}/search/multi?api_key=${apiKey}&query=${query}&page=${page}`
   )

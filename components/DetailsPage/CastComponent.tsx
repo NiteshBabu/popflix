@@ -45,9 +45,6 @@ function Cast({ cast }: { cast: Cast[] }) {
             >
               <Image
                 src={`${imagePath}/${item?.profile_path}`}
-                w={'100%'}
-                height={'225px'}
-                objectFit={'cover'}
                 borderRadius={'sm'}
               />
               <Text fontWeight={'bold'} my={1}>
@@ -68,7 +65,7 @@ function Cast({ cast }: { cast: Cast[] }) {
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
-          <ModalBody p={0}>
+          <ModalBody p={0} mb={5}>
             <PeopleComponent currentCast={currentCast} />
           </ModalBody>
         </ModalContent>

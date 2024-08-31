@@ -1,6 +1,4 @@
-import {
-  CalendarIcon,
-} from '@chakra-ui/icons'
+import { CalendarIcon } from '@chakra-ui/icons'
 import {
   Box,
   CircularProgress,
@@ -23,12 +21,11 @@ import Link from 'next/link'
 
 function PeopleComponent({ currentCast }: { currentCast: number }) {
   const [details, setDetails] = useState<CastDetails>(null)
+  console.log(details)
 
   useEffect(() => {
     ;(async () => {
       const castDetails = await fetchPerson(currentCast)
-      console.log({ castDetails })
-
       setDetails(castDetails)
     })()
   }, [])
@@ -119,27 +116,33 @@ function PeopleComponent({ currentCast }: { currentCast: number }) {
             </Box>
           </Flex>
         </Box>
-        {/* <Box textAlign={'center'} mt={10}>
+        <Box textAlign={'center'} mt={10}>
           <Text fontSize={'3xl'}>Known For</Text>
-          <Flex justifyContent={'center'} mt={5}>
-            {details?.known_for?.map((item) => (
-              <Box width={'250px'}>
+          <Flex gap={3} mt={5} overflowX={'auto'}>
+            {details?.cast?.map((item) => (
+              <Box minWidth={'250px'}>
                 <CardComponent item={item} loading={false} key={item.id} />
               </Box>
             ))}
           </Flex>
-        </Box> */}
+        </Box>
+
+        {/* Images */}
         <Box textAlign={'center'} mt={10}>
-          <Text fontSize={'3xl'}>Images</Text>
-          <Flex justifyContent={'center'} gap={4} mt={5} wrap={'wrap'}>
+          <Heading as="h2" fontSize={'xx-large'}>
+            Images
+          </Heading>
+          <Flex gap={3} mt={5} overflowX={'auto'}>
             {details?.profiles?.map((item) => (
-              <Link href={`${imagePath}/${item.file_path}`} target='_blank'>
-                <Image
-                  src={`${imagePath}/${item.file_path}`}
-                  alt={item.file_path}
-                  height={'300px'}
-                />
-              </Link>
+              <Box minWidth={'150px'}>
+                <Link href={`${imagePath}/${item.file_path}`} target="_blank">
+                  <Image
+                    borderRadius={'sm'}
+                    src={`${imagePath}/${item.file_path}`}
+                    alt={item.file_path}
+                  />
+                </Link>
+              </Box>
             ))}
           </Flex>
         </Box>

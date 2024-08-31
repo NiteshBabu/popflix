@@ -36,6 +36,7 @@ const CastDetails = z.object({
   also_known_as: z.array(z.string()),
   biography: z.string(),
   birthday: z.string(),
+  cast: z.array(TMDBResponseSchema),
   gender: z.number(),
   homepage: z.null(),
   id: z.number(),
