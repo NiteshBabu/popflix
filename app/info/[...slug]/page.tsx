@@ -7,13 +7,14 @@ import Cast from '../../../components/DetailsPage/CastComponent'
 import FullSpinner from '../../../components/FullSpinner'
 
 const DetailsPage = ({ params }) => {
-  
   const [type, id] = params.slug
 
   const [details, setDetails] = useState({})
   const [cast, setCast] = useState(null)
   const [loading, setLoading] = useState(true)
   const [isInWatchlist, setIsInWatchlist] = useState(false)
+
+  
   useEffect(() => {
     ;(async () => {
       try {
@@ -42,7 +43,7 @@ const DetailsPage = ({ params }) => {
         setIsInWatchlist={setIsInWatchlist}
       />
       <Container maxW={'7xl'} mt={10}>
-        {cast && <Cast cast={cast} />}
+        {cast?.length > 0 && <Cast cast={cast} />}
       </Container>
     </Box>
   )

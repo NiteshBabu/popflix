@@ -1,5 +1,6 @@
 import Theme from '../common/Theme'
 import '../global.css'
+import Navbar from '../components/Navbar'
 export default function RootLayout({
   children,
 }: {
@@ -8,7 +9,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Theme>{children}</Theme>
+        <Theme>
+          <Navbar />
+         {children}
+        </Theme>
       </body>
     </html>
   )

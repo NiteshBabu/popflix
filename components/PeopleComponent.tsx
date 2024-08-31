@@ -4,11 +4,9 @@ import {
   CircularProgress,
   CircularProgressLabel,
   Flex,
-  Grid,
   Heading,
   Image,
   Skeleton,
-  Spinner,
   Text,
 } from '@chakra-ui/react'
 import React, { Suspense, useEffect, useState } from 'react'
@@ -19,9 +17,12 @@ import { resolveRatingColor } from '../utils/helpers'
 import FullSpinner from './FullSpinner'
 import Link from 'next/link'
 
+const YEARS = 10
+const TIMEDELTA = new Date()
+TIMEDELTA.setFullYear(TIMEDELTA.getFullYear() - YEARS)
+
 function PeopleComponent({ currentCast }: { currentCast: number }) {
   const [details, setDetails] = useState<CastDetails>(null)
-  console.log(details)
 
   useEffect(() => {
     ;(async () => {
@@ -118,12 +119,21 @@ function PeopleComponent({ currentCast }: { currentCast: number }) {
         </Box>
         <Box textAlign={'center'} mt={10}>
           <Text fontSize={'3xl'}>Known For</Text>
-          <Flex gap={3} mt={5} overflowX={'auto'}>
-            {details?.cast?.map((item) => (
-              <Box minWidth={'250px'}>
-                <CardComponent item={item} loading={false} key={item.id} />
-              </Box>
-            ))}
+          <Flex gap={3} mt={5} overflow={'auto hidden'}>
+            {details?.cast
+              ?.filter(
+                (item) =>
+                  new Date(item.release_date) > TIMEDELTA &&
+                  new Date(item.release_date) < new Date()
+              )
+              .sort(
+                (x, y) => +new Date(y.release_date) - +new Date(x.release_date)
+              )
+              .map((item) => (
+                <Box minWidth={{ base: '150px' }}>
+                  <CardComponent item={item} loading={false} key={item.id} />
+                </Box>
+              ))}
           </Flex>
         </Box>
 

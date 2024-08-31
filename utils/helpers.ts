@@ -18,3 +18,5 @@ export const resolveRatingColor = (rating: number): string => {
     return 'red.400'
   }
 }
+
+export const filterByRating = (items, rating) => items.filter((item) => item.rating >= rating)
