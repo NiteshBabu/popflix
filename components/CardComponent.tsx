@@ -9,7 +9,7 @@ const CardComponent = ({
   loading,
 }: {
   item: TMDBResponseType
-  loading: boolean
+  loading?: boolean
 }) => {
   if (loading) return <Skeleton height={300} />
   return (
