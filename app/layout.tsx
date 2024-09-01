@@ -1,3 +1,4 @@
+'use client'
 import Theme from '../common/Theme'
 import '../global.css'
 import Navbar from '../components/Navbar'
@@ -13,7 +14,7 @@ export default function RootLayout({
         <Theme>
           <AuthProvider>
             <Navbar />
-              {children}
+            {children}
           </AuthProvider>
         </Theme>
       </body>

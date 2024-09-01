@@ -35,7 +35,14 @@ const Navbar = () => {
     }
   }
   return (
-    <Box py="4" position={'sticky'} top={0} width={'100%'} zIndex={20} bg={"black"}>
+    <Box
+      py="4"
+      position={'sticky'}
+      top={0}
+      width={'100%'}
+      zIndex={20}
+      bg={'black'}
+    >
       <Container maxW={'container.xl'}>
         <Flex justifyContent={'space-between'}>
           <Link href="/">
@@ -55,6 +62,7 @@ const Navbar = () => {
             gap="4"
             alignItems={'center'}
             display={{ base: 'none', md: 'flex' }}
+            fontWeight={'medium'}
           >
             <Link href="/">Home</Link>
             <Link href="/movies">Movies</Link>
@@ -73,6 +81,9 @@ const Navbar = () => {
                   />
                 </MenuButton>
                 <MenuList>
+                  <Link href="/profile">
+                    <MenuItem>Profile</MenuItem>
+                  </Link>
                   <Link href="/watchlist">
                     <MenuItem>Watchlist</MenuItem>
                   </Link>
@@ -131,6 +142,8 @@ const Navbar = () => {
                 </DrawerHeader>
                 <DrawerBody>
                   <Flex flexDirection={'column'} gap={'4'} onClick={onClose}>
+                    <Link href="/profile">Profile</Link>
+                    <Link href="/watchlist">Watchlist</Link>
                     <Link href="/">Home</Link>
                     <Link href="/movies">Movies</Link>
                     <Link href="/shows">Shows</Link>
