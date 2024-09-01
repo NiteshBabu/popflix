@@ -1,4 +1,4 @@
-export function useDebounce(cb, delay = 300) {
+export function useDebounce(cb, delay = 500) {
   let timeoutId;
 
   return (...args) => {

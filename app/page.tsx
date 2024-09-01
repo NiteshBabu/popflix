@@ -70,7 +70,7 @@ const Home = () => {
         {data &&
           data?.map((item, i) => (
             <CardComponent
-              loading={loading}
+              isLoading={loading}
               key={item?.id}
               item={item}
             />

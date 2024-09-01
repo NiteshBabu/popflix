@@ -6,12 +6,12 @@ import { TMDBResponseType } from '../utils/types'
 
 const CardComponent = ({
   item,
-  loading,
+  isLoading,
 }: {
   item: TMDBResponseType
-  loading?: boolean
+  isLoading?: boolean
 }) => {
-  if (loading) return <Skeleton height={300} />
+  if (isLoading) return <Skeleton height={300} />
   return (
     <Link href={`/info/${item.media_type}/${item.id}`} style={{ cursor: 'pointer' }}>
       <Box

@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-
 export const imagePath = 'https://image.tmdb.org/t/p/w500'
 export const imagePathOriginal = 'https://image.tmdb.org/t/p/original'
 
@@ -19,7 +18,7 @@ export const fetchTrending = async (timeWindow = 'day') => {
   } catch (e) {
     error = e
     console.error(e)
-    throw e;
+    throw e
   }
 
   return { results, error }
@@ -39,11 +38,26 @@ export const fetchCredits = async (type, id) => {
   return resp?.data
 }
 
-
 // MOVIES & SERIES - Videos
 export const fetchVideos = async (type, id) => {
   const resp = await axios.get(
     `${baseUrl}/${type}/${id}/videos?api_key=${apiKey}`
+  )
+  return resp?.data
+}
+
+// DISCOVER
+export const fetchMovies = async (page, sortBy) => {
+  const resp = await axios.get(
+    `${baseUrl}/discover/movie?api_key=${apiKey}&page=${page}&sort_by=${sortBy}`
+  )
+  return resp?.data
+}
+
+// Shows
+export const fetchShows = async (page, sortBy) => {
+  const resp = await axios.get(
+    `${baseUrl}/discover/tv?api_key=${apiKey}&page=${page}&sort_by=${sortBy}`
   )
   return resp?.data
 }

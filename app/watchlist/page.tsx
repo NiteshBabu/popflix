@@ -17,7 +17,6 @@ const Watchlist = () => {
       getWatchlist(user?.uid)
         .then((data) => {
           setWatchlist(data)
-          console.log(data, 'data')
         })
         .catch((err) => {
           console.log(err, 'error')
@@ -26,7 +25,7 @@ const Watchlist = () => {
           setIsLoading(false)
         })
     }
-  }, [user?.uid, getWatchlist])
+  }, [user?.uid])
 
   return (
     <Container maxW={'container.xl'}>

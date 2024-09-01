@@ -16,17 +16,13 @@ import { useDebounce } from '../../hooks/useDebounce'
 import PaginationComponent from '../../components/PaginationComponent'
 import { usePathname, useRouter } from 'next/navigation'
 
-// const fetchSearch = async (searchQuery, currentPage, totalPages, isLoading) => {
-//   const res = await fetchMultiSearch(searchQuery, currentPage)
-//   return res?.results
-// }
 const Search = ({ searchParams }) => {
-  const { q } = searchParams
+  const { q, page } = searchParams
 
   const pathname = usePathname()
-  const { replace } = useRouter()
-  const [searchQuery, setSearchQuery] = useState(q || 'Iron Man')
-  const [currentPage, setcurrentPage] = useState(1)
+  const { push } = useRouter()
+  const [searchQuery, setSearchQuery] = useState(q || '')
+  const [currentPage, setcurrentPage] = useState(page || 1)
   const [totalPages, setTotalPages] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState(null)
@@ -36,7 +32,7 @@ const Search = ({ searchParams }) => {
       ['q', searchQuery],
       ['page', currentPage],
     ])
-    replace(`${pathname}?${query}`)
+    push(`${pathname}?${query}`)
     setIsLoading(true)
     setcurrentPage(1)
     fetchMultiSearch(searchQuery, currentPage)
@@ -52,7 +48,7 @@ const Search = ({ searchParams }) => {
       ['q', searchQuery],
       ['page', currentPage],
     ])
-    replace(`${pathname}?${query}`)
+    push(`${pathname}?${query}`)
     setIsLoading(true)
     fetchMultiSearch(searchQuery, currentPage)
       .then((resp) => {
@@ -62,6 +58,7 @@ const Search = ({ searchParams }) => {
       .finally(() => setIsLoading(false))
   }, [currentPage])
 
+  const handleChange = useDebounce((e) => setSearchQuery(e.target.value))
   return (
     <Container maxW={'container.xl'}>
       <Flex alignItems={'baseline'} gap={'4'} my={'10'}>
@@ -73,8 +70,8 @@ const Search = ({ searchParams }) => {
       <Input
         placeholder="Search movies, shows, people"
         _placeholder={{ color: 'gray.100' }}
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        // value={}
+        onChange={handleChange}
       />
 
       {isLoading && <FullSpinner />}
