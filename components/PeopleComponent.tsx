@@ -131,7 +131,7 @@ function PeopleComponent({ currentCast }: { currentCast: number }) {
               )
               .map((item) => (
                 <Box minWidth={{ base: '150px' }}>
-                  <CardComponent item={item} loading={false} key={item.id} />
+                  <CardComponent item={item} isLoading={false} key={item.id} />
                 </Box>
               ))}
           </Flex>
