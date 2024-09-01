@@ -2,6 +2,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Container,
   Drawer,
   DrawerBody,
@@ -141,12 +142,17 @@ const Navbar = () => {
                   )}
                 </DrawerHeader>
                 <DrawerBody>
-                  <Flex flexDirection={'column'} gap={'4'} onClick={onClose}>
-                    <Link href="/profile">Profile</Link>
-                    <Link href="/watchlist">Watchlist</Link>
+                  <Flex flexDirection={'column'} h={"100%"} gap={'4'} onClick={onClose}>
+                    {user && (
+                      <>
+                        <Link href="/profile">Profile</Link>
+                        <Link href="/watchlist">Watchlist</Link>
+                      </>
+                    )}
                     <Link href="/">Home</Link>
                     <Link href="/movies">Movies</Link>
                     <Link href="/shows">Shows</Link>
+                    {user && <Button onClick={logout} bg={"crimson"} mt={"auto"} mb={3}>Logout</Button>}
                   </Flex>
                 </DrawerBody>
               </DrawerContent>
