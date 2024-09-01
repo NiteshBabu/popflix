@@ -45,7 +45,7 @@ const CardComponent = ({
           bg="rgba(0,0,0,0.9)"
           transition={'all 0.3s ease-in-out'}
         >
-          <Text textAlign={'center'} fontWeight={'bolder'}>
+          <Text textAlign={'center'} fontWeight={'bolder'} fontSize={{ base : "small", md: "medium"}}>
             {item?.title || item?.name}
           </Text>
           <Text

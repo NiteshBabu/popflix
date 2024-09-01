@@ -35,7 +35,7 @@ const Navbar = () => {
     }
   }
   return (
-    <Box py="4" mb="2">
+    <Box py="4" position={'sticky'} top={0} width={'100%'} zIndex={20} bg={"black"}>
       <Container maxW={'container.xl'}>
         <Flex justifyContent={'space-between'}>
           <Link href="/">

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useFirestore } from '../../services/firestore'
 import { useAuth } from '../../context/useAuth'
 import { Container, Flex, Grid, Heading, Spinner } from '@chakra-ui/react'
-import CardComponent from '../../components/CardComponent'
+import WatchlistCard from '../../components/WatchlistCard'
 
 const Watchlist = () => {
   const { getWatchlist } = useFirestore()
@@ -47,11 +47,21 @@ const Watchlist = () => {
         </Flex>
       )}
       {!isLoading && watchlist?.length > 0 && (
-        <Flex>
+        <Grid
+          templateColumns={{
+            base: '1fr',
+            md: 'repeat(2, 1fr)',
+          }}
+          gap={'4'}
+        >
           {watchlist?.map((item) => (
-            <CardComponent key={item?.id} item={item} />
+            <WatchlistCard
+              key={item?.id}
+              item={item}
+              setWatchlist={setWatchlist}
+            />
           ))}
-        </Flex>
+        </Grid>
       )}
     </Container>
   )

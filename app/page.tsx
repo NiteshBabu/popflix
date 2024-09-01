@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Box, Container, Flex, Grid, Heading, Skeleton } from '@chakra-ui/react'
+import { Box, Container, Flex, Grid, Heading} from '@chakra-ui/react'
 import { fetchTrending } from '../services/api'
 import CardComponent from '../components/CardComponent'
 import { TMDBResponseType } from '../utils/types'
@@ -61,8 +61,7 @@ const Home = () => {
       </Flex>
       <Grid
         templateColumns={{
-          base: '1fr',
-          sm: 'repeat(2, 1fr)',
+          base: 'repeat(2, 1fr)',
           md: 'repeat(4, 1fr)',
           lg: 'repeat(5, 1fr)',
         }}
