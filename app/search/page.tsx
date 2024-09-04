@@ -5,6 +5,7 @@ import {
   Flex,
   Grid,
   Heading,
+  Image,
   Input,
   Skeleton,
   Spinner,
@@ -21,46 +22,49 @@ const Search = ({ searchParams }) => {
 
   const pathname = usePathname()
   const { replace } = useRouter()
-  const [searchQuery, setSearchQuery] = useState(q || '')
+  const [searchQuery, setSearchQuery] = useState(q || null)
   const [currentPage, setcurrentPage] = useState(page || 1)
   const [totalPages, setTotalPages] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState(null)
 
   useEffect(() => {
-    const query = new URLSearchParams([
-      ['q', searchQuery],
-      ['page', currentPage],
-    ])
-    replace(`${pathname}?${query}`)
-    setIsLoading(true)
-    setcurrentPage(1)
-    fetchMultiSearch(searchQuery, currentPage)
-      .then((resp) => {
-        setData(resp.results)
-        setTotalPages(resp.total_pages)
-      })
-      .finally(() => setIsLoading(false))
+    if (searchQuery) {
+      const query = new URLSearchParams([
+        ['q', searchQuery],
+        ['page', currentPage],
+      ])
+      replace(`${pathname}?${query}`)
+      setIsLoading(true)
+      setcurrentPage(1)
+      fetchMultiSearch(searchQuery, currentPage)
+        .then((resp) => {
+          setData(resp.results)
+          setTotalPages(resp.total_pages)
+        })
+        .finally(() => setIsLoading(false))
+    }
   }, [searchQuery])
 
   useEffect(() => {
-    const query = new URLSearchParams([
-      ['q', searchQuery],
-      ['page', currentPage],
-    ])
-    replace(`${pathname}?${query}`)
-    setIsLoading(true)
-    fetchMultiSearch(searchQuery, currentPage)
-      .then((resp) => {
-        setData(resp.results)
-        setcurrentPage(resp.page)
-      })
-      .finally(() => setIsLoading(false))
+    if (searchQuery) {
+      const query = new URLSearchParams([
+        ['q', searchQuery],
+        ['page', currentPage],
+      ])
+      replace(`${pathname}?${query}`)
+      setIsLoading(true)
+      fetchMultiSearch(searchQuery, currentPage)
+        .then((resp) => {
+          setData(resp.results)
+          setcurrentPage(resp.page)
+        })
+        .finally(() => setIsLoading(false))
+    }
   }, [currentPage])
 
-  console.log(data);
-  
   const handleChange = useDebounce((e) => setSearchQuery(e.target.value))
+
   return (
     <Container maxW={'container.xl'}>
       <Flex alignItems={'baseline'} gap={'4'} my={'10'}>
@@ -76,8 +80,15 @@ const Search = ({ searchParams }) => {
         onChange={handleChange}
       />
 
-      {isLoading && <FullSpinner />}
 
+      {(!data || isLoading) && (
+        <Image
+          w={'300px'}
+          src="/images/what-looking.gif"
+          alt="looking"
+          margin={'auto'}
+        />
+      )}
       {data?.length === 0 && !isLoading && (
         <Heading textAlign={'center'} as="h3" fontSize={'sm'} mt="10">
           No results found
@@ -87,8 +98,7 @@ const Search = ({ searchParams }) => {
       {data && (
         <Grid
           templateColumns={{
-            base: '1fr',
-            sm: 'repeat(2, 1fr)',
+            base: 'repeat(2, 1fr)',
             md: 'repeat(4, 1fr)',
             lg: 'repeat(5, 1fr)',
           }}

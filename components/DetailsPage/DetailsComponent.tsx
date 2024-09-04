@@ -1,9 +1,4 @@
-import {
-  CalendarIcon,
-  CheckCircleIcon,
-  SmallAddIcon,
-  TimeIcon,
-} from '@chakra-ui/icons'
+import { CalendarIcon, TimeIcon } from '@chakra-ui/icons'
 import {
   Badge,
   Box,
@@ -19,13 +14,7 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react'
-import React, {
-  Dispatch,
-  SetStateAction,
-  Suspense,
-  useEffect,
-  useState,
-} from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { imagePath, imagePathOriginal } from '../../services/api'
 import {
   minutesTohours,
@@ -47,16 +36,15 @@ function DetailsComponent({
   const { user } = useAuth()
   const [isInWatchlist, setIsInWatchlist] = useState(false)
 
-  const { addToWatchlist, checkIfInWatchlist, removeFromWatchlist } =
-    useFirestore()
+  const { addToWatchlist, checkIfInWatchlist, removeFromWatchlist } = useFirestore()
   const toast = useToast()
 
   const handleSaveToWatchlist = async () => {
     if (!user) {
       toast({
-        title: 'Login to add to watchlist',
+        title: 'You Need To Login First, Click On Profile To Login',
         status: 'error',
-        isClosable: true,
+        position: 'bottom-right',
       })
       return
     }
@@ -181,18 +169,20 @@ function DetailsComponent({
               </CircularProgress>
               <Text display={{ base: 'none', md: 'initial' }}>User Score</Text>
 
-              {/* TODO */}
               {isInWatchlist ? (
                 <Button
-                  leftIcon={<BookmarkIcon fill={"green.200"} stroke={"green.200"} />}
+                  leftIcon={
+                    <BookmarkIcon fill={'green.200'} stroke={'green.200'} />
+                  }
                   colorScheme="green"
                   variant={'outline'}
+                  onClick={handleRemoveFromWatchlist}
                 >
                   Watchlisted
                 </Button>
               ) : (
                 <Button
-                  leftIcon={<BookmarkIcon fill={"white"} stroke={"white"}/>}
+                  leftIcon={<BookmarkIcon fill={'white'} stroke={'white'} />}
                   variant={'outline'}
                   onClick={handleSaveToWatchlist}
                 >
@@ -234,7 +224,10 @@ export default DetailsComponent
 const BookmarkIcon = (props) => {
   return (
     <Icon viewBox="0 0 24 24" {...props}>
-      <path stroke={props.stroke} d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z" />
+      <path
+        stroke={props.stroke}
+        d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z"
+      />
     </Icon>
   )
 }

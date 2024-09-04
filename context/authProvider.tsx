@@ -7,20 +7,40 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth'
+import { useToast } from '@chakra-ui/react'
 
 export const AuthContext = createContext({})
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const toast = useToast()
 
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider()
-    return signInWithPopup(auth, provider)
+    return signInWithPopup(auth, provider).then(() => {
+      toast({
+        title: 'Login',
+        description: 'Logged In Successfully',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'bottom-right',
+      })
+    })
   }
 
   const logout = () => {
-    return signOut(auth)
+    return signOut(auth).then(() => {
+      toast({
+        title: 'Logout',
+        description: 'Logged Out Successfully',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+        position: 'bottom-right',
+      })
+    })
   }
 
   useEffect(() => {

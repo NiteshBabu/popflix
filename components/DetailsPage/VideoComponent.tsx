@@ -19,7 +19,7 @@ const VideoComponent = ({ videos }) => {
       >
         Videos
       </Heading>
-      <YoutubeEmbed id={trailer.key}/>
+      {trailer && <YoutubeEmbed id={trailer.key}/>}
       <Flex mt="5" mb="10" overflowX={'scroll'} gap={'5'}>
         {filteredvideos &&
           filteredvideos?.map((item) => (

@@ -19,7 +19,7 @@ export const useFirestore = () => {
     const docRef = await addDoc(collection(db, collectionName), data)
     console.log('Document written with ID: ', docRef.id)
   }
-  
+
   const addToWatchlist = async (userId, dataId, data) => {
     try {
       if (await checkIfInWatchlist(userId, dataId)) {
@@ -29,6 +29,8 @@ export const useFirestore = () => {
           status: 'error',
           duration: 9000,
           isClosable: true,
+          position: 'bottom-right'
+
         })
         return false
       }
@@ -38,6 +40,8 @@ export const useFirestore = () => {
         description: 'Added to watchlist',
         status: 'success',
         isClosable: true,
+        position: 'bottom-right'
+
       })
     } catch (error) {
       console.log(error, 'Error adding document')
@@ -77,6 +81,8 @@ export const useFirestore = () => {
         description: 'Removed from watchlist',
         status: 'success',
         isClosable: true,
+        position: 'bottom-right'
+
       })
     } catch (error) {
       toast({
@@ -84,6 +90,7 @@ export const useFirestore = () => {
         description: 'An error occurred.',
         status: 'error',
         isClosable: true,
+        position: 'bottom-right'
       })
       console.log(error, 'Error while deleting doc')
     }
