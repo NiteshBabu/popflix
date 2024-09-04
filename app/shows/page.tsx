@@ -1,12 +1,13 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { Box, Container, Flex, Grid, Heading, Select } from '@chakra-ui/react'
+import { Suspense, useEffect, useState } from 'react'
+import { Container, Flex, Grid, Heading, Select } from '@chakra-ui/react'
 import CardComponent from '../../components/CardComponent'
 import { TMDBResponseType } from '../../utils/types'
 import { fetchShows } from '../../services/api'
 import PaginationComponent from '../../components/PaginationComponent'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
+import FullSpinner from '../../components/FullSpinner'
 
 const FILTERS = {
   popular: 'popularity.desc',
@@ -26,8 +27,6 @@ const ShowsPage = () => {
   const [totalPages, setTotalPages] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
 
-  console.log(0)
-
   useEffect(() => {
     query.set('page', currentPage.toString())
     query.set('filter', filter)
@@ -44,59 +43,61 @@ const ShowsPage = () => {
   }, [currentPage, filter])
 
   return (
-    <Container maxW={'container.xl'}>
-      <Flex
-        alignItems={'baseline'}
-        justifyContent={'space-between'}
-        gap={'4'}
-        my={'10'}
-      >
-        <Heading as="h2" fontSize={'md'} textTransform={'uppercase'}>
-          Shows
-        </Heading>
-        <Select
-          w={'130px'}
-          onChange={(e) => {
-            setcurrentPage(1)
-            setFilter(
-              e.target.options[e.target.selectedIndex].textContent
-                .trim()
-                .replaceAll(' ', '_')
-                .toLowerCase()
-            )
-          }}
+    <Suspense fallback={<FullSpinner />}>
+      <Container maxW={'container.xl'}>
+        <Flex
+          alignItems={'baseline'}
+          justifyContent={'space-between'}
+          gap={'4'}
+          my={'10'}
         >
-          <option value="popularity.desc">Popular</option>
-          <option value="vote_average.desc&vote_count.gte=1000">
-            Top Rated
-          </option>
-        </Select>
-      </Flex>
-      <Grid
-        templateColumns={{
-          base: 'repeat(2, 1fr)',
-          md: 'repeat(4, 1fr)',
-          lg: 'repeat(5, 1fr)',
-        }}
-        gap={'4'}
-      >
-        {data &&
-          data?.map((item, i) => (
-            <CardComponent
-              isLoading={isLoading}
-              key={i}
-              item={{ ...item, media_type: 'tv' }}
-            />
-          ))}
-      </Grid>
-      {data?.length > 0 && !isLoading && (
-        <PaginationComponent
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setcurrentPage={setcurrentPage}
-        />
-      )}
-    </Container>
+          <Heading as="h2" fontSize={'md'} textTransform={'uppercase'}>
+            Shows
+          </Heading>
+          <Select
+            w={'130px'}
+            onChange={(e) => {
+              setcurrentPage(1)
+              setFilter(
+                e.target.options[e.target.selectedIndex].textContent
+                  .trim()
+                  .replaceAll(' ', '_')
+                  .toLowerCase()
+              )
+            }}
+          >
+            <option value="popularity.desc">Popular</option>
+            <option value="vote_average.desc&vote_count.gte=1000">
+              Top Rated
+            </option>
+          </Select>
+        </Flex>
+        <Grid
+          templateColumns={{
+            base: 'repeat(2, 1fr)',
+            md: 'repeat(4, 1fr)',
+            lg: 'repeat(5, 1fr)',
+          }}
+          gap={'4'}
+        >
+          {data &&
+            data?.map((item, i) => (
+              <CardComponent
+                isLoading={isLoading}
+                key={i}
+                item={{ ...item, media_type: 'tv' }}
+              />
+            ))}
+        </Grid>
+        {data?.length > 0 && !isLoading && (
+          <PaginationComponent
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setcurrentPage={setcurrentPage}
+          />
+        )}
+      </Container>
+    </Suspense>
   )
 }
 
