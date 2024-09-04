@@ -8,6 +8,7 @@ const TMDBResponseSchema = z.object({
   original_title: z.string(),
   overview: z.string(),
   poster_path: z.string(),
+  profile_path: z.string(),
   media_type: z.string(),
   adult: z.boolean(),
   original_language: z.string(),

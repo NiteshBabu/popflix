@@ -5,33 +5,52 @@ import CardComponent from '../../components/CardComponent'
 import { TMDBResponseType } from '../../utils/types'
 import { fetchShows } from '../../services/api'
 import PaginationComponent from '../../components/PaginationComponent'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
+const FILTERS = {
+  popular: 'popularity.desc',
+  top_rated: 'vote_average.desc&vote_count.gte=1000',
+}
 const ShowsPage = () => {
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const { replace } = useRouter()
+  const query = new URLSearchParams(searchParams)
+
   const [data, setData] = useState<TMDBResponseType[]>(
     Array.from({ length: 20 })
   )
-  const [sortBy, setSortBy] = useState('popularity.desc')
-
-  const [isLoading, setIsLoading] = useState(true)
-  const [currentPage, setcurrentPage] = useState(1)
+  const [filter, setFilter] = useState(searchParams.get('filter') || 'popular')
+  const [currentPage, setcurrentPage] = useState(+searchParams.get('page') || 1)
   const [totalPages, setTotalPages] = useState(1)
+  const [isLoading, setIsLoading] = useState(true)
+
+  console.log(0)
 
   useEffect(() => {
-    setIsLoading(true)
+    query.set('page', currentPage.toString())
+    query.set('filter', filter)
+    replace(`?${query.toString()}`, {
+      scroll: false,
+    })
     ;(async function () {
-      const resp = await fetchShows(currentPage, sortBy)
+      const resp = await fetchShows(currentPage, FILTERS[filter])
       setData(resp.results)
       setcurrentPage(resp.page)
       setTotalPages(resp.total_pages)
       setIsLoading(false)
     })()
-  }, [currentPage, sortBy])
-
-  console.log({ data })
+  }, [currentPage, filter])
 
   return (
     <Container maxW={'container.xl'}>
-      <Flex alignItems={'baseline'} justifyContent={'space-between'} gap={'4'} my={'10'}>
+      <Flex
+        alignItems={'baseline'}
+        justifyContent={'space-between'}
+        gap={'4'}
+        my={'10'}
+      >
         <Heading as="h2" fontSize={'md'} textTransform={'uppercase'}>
           Shows
         </Heading>
@@ -39,7 +58,12 @@ const ShowsPage = () => {
           w={'130px'}
           onChange={(e) => {
             setcurrentPage(1)
-            setSortBy(e.target.value)
+            setFilter(
+              e.target.options[e.target.selectedIndex].textContent
+                .trim()
+                .replaceAll(' ', '_')
+                .toLowerCase()
+            )
           }}
         >
           <option value="popularity.desc">Popular</option>
@@ -60,7 +84,7 @@ const ShowsPage = () => {
           data?.map((item, i) => (
             <CardComponent
               isLoading={isLoading}
-              key={item?.id}
+              key={i}
               item={{ ...item, media_type: 'tv' }}
             />
           ))}

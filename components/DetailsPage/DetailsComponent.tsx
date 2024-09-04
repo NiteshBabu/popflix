@@ -13,6 +13,7 @@ import {
   Container,
   Flex,
   Heading,
+  Icon,
   Image,
   Skeleton,
   Text,
@@ -183,19 +184,19 @@ function DetailsComponent({
               {/* TODO */}
               {isInWatchlist ? (
                 <Button
-                  leftIcon={<CheckCircleIcon />}
+                  leftIcon={<BookmarkIcon fill={"green.200"} stroke={"green.200"} />}
                   colorScheme="green"
                   variant={'outline'}
                 >
-                  In watchlist
+                  Watchlisted
                 </Button>
               ) : (
                 <Button
-                  leftIcon={<SmallAddIcon />}
+                  leftIcon={<BookmarkIcon fill={"white"} stroke={"white"}/>}
                   variant={'outline'}
                   onClick={handleSaveToWatchlist}
                 >
-                  Add to watchlist
+                  Watchlist
                 </Button>
               )}
             </Flex>
@@ -229,3 +230,11 @@ function DetailsComponent({
 }
 
 export default DetailsComponent
+
+const BookmarkIcon = (props) => {
+  return (
+    <Icon viewBox="0 0 24 24" {...props}>
+      <path stroke={props.stroke} d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z" />
+    </Icon>
+  )
+}

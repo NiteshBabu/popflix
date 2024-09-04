@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { Box, Container, Flex, Grid, Heading} from '@chakra-ui/react'
+import { Box, Container, Flex, Grid, Heading } from '@chakra-ui/react'
 import { fetchTrending } from '../services/api'
 import CardComponent from '../components/CardComponent'
 import { TMDBResponseType } from '../utils/types'
@@ -67,14 +67,11 @@ const Home = () => {
         }}
         gap={'4'}
       >
-        {data &&
-          data?.map((item, i) => (
-            <CardComponent
-              isLoading={loading}
-              key={item?.id}
-              item={item}
-            />
-          ))}
+        {data?.map((item, i) => (
+          <>
+            <CardComponent isLoading={loading} key={i} item={item} />
+          </>
+        ))}
       </Grid>
     </Container>
   )

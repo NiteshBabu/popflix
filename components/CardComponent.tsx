@@ -11,9 +11,15 @@ const CardComponent = ({
   item: TMDBResponseType
   isLoading?: boolean
 }) => {
+  const href =
+    item?.media_type === 'person'
+      ? `${item?.media_type}/${item?.id}`
+      : `/info/${item?.media_type}/${item?.id}`
+
   if (isLoading) return <Skeleton height={300} />
+
   return (
-    <Link href={`/info/${item.media_type}/${item.id}`} style={{ cursor: 'pointer' }}>
+    <Link href={href} style={{ cursor: 'pointer' }}>
       <Box
         position={'relative'}
         transform={'scale(1)'}
@@ -28,7 +34,7 @@ const CardComponent = ({
         }}
       >
         <Image
-          src={`${imagePath}/${item?.poster_path}`}
+          src={`${imagePath}/${item?.poster_path || item?.profile_path}`}
           alt={item?.title || item?.name}
           height={'100%'}
         />
@@ -45,7 +51,11 @@ const CardComponent = ({
           bg="rgba(0,0,0,0.9)"
           transition={'all 0.3s ease-in-out'}
         >
-          <Text textAlign={'center'} fontWeight={'bolder'} fontSize={{ base : "small", md: "medium"}}>
+          <Text
+            textAlign={'center'}
+            fontWeight={'bolder'}
+            fontSize={{ base: 'small', md: 'medium' }}
+          >
             {item?.title || item?.name}
           </Text>
           <Text

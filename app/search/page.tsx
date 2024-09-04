@@ -20,7 +20,7 @@ const Search = ({ searchParams }) => {
   const { q, page } = searchParams
 
   const pathname = usePathname()
-  const { push } = useRouter()
+  const { replace } = useRouter()
   const [searchQuery, setSearchQuery] = useState(q || '')
   const [currentPage, setcurrentPage] = useState(page || 1)
   const [totalPages, setTotalPages] = useState(1)
@@ -32,7 +32,7 @@ const Search = ({ searchParams }) => {
       ['q', searchQuery],
       ['page', currentPage],
     ])
-    push(`${pathname}?${query}`)
+    replace(`${pathname}?${query}`)
     setIsLoading(true)
     setcurrentPage(1)
     fetchMultiSearch(searchQuery, currentPage)
@@ -48,7 +48,7 @@ const Search = ({ searchParams }) => {
       ['q', searchQuery],
       ['page', currentPage],
     ])
-    push(`${pathname}?${query}`)
+    replace(`${pathname}?${query}`)
     setIsLoading(true)
     fetchMultiSearch(searchQuery, currentPage)
       .then((resp) => {
@@ -58,6 +58,8 @@ const Search = ({ searchParams }) => {
       .finally(() => setIsLoading(false))
   }, [currentPage])
 
+  console.log(data);
+  
   const handleChange = useDebounce((e) => setSearchQuery(e.target.value))
   return (
     <Container maxW={'container.xl'}>
@@ -70,7 +72,7 @@ const Search = ({ searchParams }) => {
       <Input
         placeholder="Search movies, shows, people"
         _placeholder={{ color: 'gray.100' }}
-        // value={}
+        defaultValue={searchQuery}
         onChange={handleChange}
       />
 
