@@ -1,4 +1,5 @@
-import { CalendarIcon } from '@chakra-ui/icons'
+'use client'
+import React, { Suspense, useEffect, useState } from 'react'
 import {
   Box,
   CircularProgress,
@@ -9,27 +10,37 @@ import {
   Skeleton,
   Text,
 } from '@chakra-ui/react'
-import React, { Suspense, useEffect, useState } from 'react'
-import { fetchPerson, imagePath, imagePathOriginal } from '../services/api'
-import { CastDetails } from '../utils/types'
-import CardComponent from './CardComponent'
-import { resolveRatingColor } from '../utils/helpers'
-import FullSpinner from './FullSpinner'
+import { CalendarIcon } from '@chakra-ui/icons'
+import {
+  fetchPerson,
+  imagePath,
+  imagePathOriginal,
+} from '../../../services/api'
+import { CastDetails } from '../../../utils/types'
+import CardComponent from '../../../components/CardComponent'
+import { resolveRatingColor } from '../../../utils/helpers'
+import FullSpinner from '../../../components/FullSpinner'
 import Link from 'next/link'
 
 const YEARS = 10
 const TIMEDELTA = new Date()
 TIMEDELTA.setFullYear(TIMEDELTA.getFullYear() - YEARS)
 
-function PeopleComponent({ currentCast }: { currentCast: number }) {
+function PeopleComponent({ params }) {
+  const { id } = params
+
   const [details, setDetails] = useState<CastDetails>(null)
 
   useEffect(() => {
     ;(async () => {
-      const castDetails = await fetchPerson(currentCast)
+      const castDetails = await fetchPerson(id)
+      console.log(castDetails);
+      
       setDetails(castDetails)
     })()
   }, [])
+
+  console.log(details)
 
   if (!details) return <FullSpinner />
   return (
@@ -149,11 +160,7 @@ function PeopleComponent({ currentCast }: { currentCast: number }) {
           <Heading as="h2" fontSize={'xx-large'}>
             Known For
           </Heading>
-          <Flex
-            gap={3}
-            mt={5}
-            overflow={'auto hidden'}
-          >
+          <Flex gap={3} mt={5} overflow={'auto hidden'}>
             {details?.cast
               ?.filter(
                 (item) =>

@@ -1,5 +1,5 @@
 'use client'
-import { Suspense, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, Flex, Grid, Heading, Select } from '@chakra-ui/react'
 import CardComponent from '../../components/CardComponent'
 import { TMDBResponseType } from '../../utils/types'
@@ -7,7 +7,6 @@ import { fetchShows } from '../../services/api'
 import PaginationComponent from '../../components/PaginationComponent'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
-import FullSpinner from '../../components/FullSpinner'
 
 const FILTERS = {
   popular: 'popularity.desc',
@@ -43,7 +42,6 @@ const ShowsPage = () => {
   }, [currentPage, filter])
 
   return (
-    <Suspense fallback={<FullSpinner />}>
       <Container maxW={'container.xl'}>
         <Flex
           alignItems={'baseline'}
@@ -97,7 +95,6 @@ const ShowsPage = () => {
           />
         )}
       </Container>
-    </Suspense>
   )
 }
 
