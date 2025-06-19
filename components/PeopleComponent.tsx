@@ -164,8 +164,8 @@ function PeopleComponent({ currentCast }: { currentCast: number }) {
                 (x, y) => +new Date(y.release_date) - +new Date(x.release_date)
               )
               .map((item) => (
-                <Box minW={'150px'} width={'150px'}>
-                  <CardComponent item={item} isLoading={false} key={item.id} />
+                <Box minW={'200px'} width={'250px'}>
+                  <CardComponent item={item} isLoading={false} key={item.id} height={330} />
                 </Box>
               ))}
           </Flex>
@@ -178,7 +178,7 @@ function PeopleComponent({ currentCast }: { currentCast: number }) {
           </Heading>
           <Flex gap={3} mt={5} overflowX={'auto'}>
             {details?.profiles?.map((item) => (
-              <Box minWidth={'150px'}>
+              <Box minWidth={'150px'} width={"150px"}>
                 <Link
                   href={`${imagePathOriginal}${item.file_path}`}
                   target="_blank"
