@@ -14,16 +14,16 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react'
-import React, { Suspense, useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+import { useAuth } from '../../context/useAuth'
 import { imagePath, imagePathOriginal } from '../../services/api'
+import { useFirestore } from '../../services/firestore'
 import {
   minutesTohours,
   ratingToPercentage,
   resolveRatingColor,
 } from '../../utils/helpers'
 import { Details } from '../../utils/types'
-import { useFirestore } from '../../services/firestore'
-import { useAuth } from '../../context/useAuth'
 
 function DetailsComponent({
   details,
@@ -114,7 +114,7 @@ function DetailsComponent({
             />
           </Suspense>
           <Box>
-            <Heading fontSize={'3xl'}>
+            <Heading fontSize={'3xl'} as="h1" >
               {title}{' '}
               <Text as="span" fontWeight={'normal'} color={'gray.400'}>
                 {new Date(releaseDate).getFullYear()}

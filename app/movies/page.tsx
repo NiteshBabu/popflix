@@ -1,12 +1,11 @@
 'use client'
+import { Container, Flex, Grid, Heading, Select } from '@chakra-ui/react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Box, Container, Flex, Grid, Heading, Select } from '@chakra-ui/react'
 import CardComponent from '../../components/CardComponent'
-import { TMDBResponseType } from '../../utils/types'
-import { fetchMovies, fetchShows } from '../../services/api'
 import PaginationComponent from '../../components/PaginationComponent'
-import { usePathname, useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/navigation'
+import { fetchMovies } from '../../services/api'
+import { TMDBResponseType } from '../../utils/types'
 
 const FILTERS = {
   popular: 'popularity.desc',
@@ -26,7 +25,6 @@ const ShowsPage = () => {
   const [totalPages, setTotalPages] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
 
-  console.log(0)
 
   useEffect(() => {
     query.set('page', currentPage.toString())
