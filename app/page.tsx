@@ -60,7 +60,7 @@ const Home = () => {
       </Flex>
       <Grid
         templateColumns={{
-          base: 'repeat(auto-fit, minmax(200px,1fr))',
+          base: 'repeat(auto-fit, minmax(180px,1fr))',
         }}
         gap={'4'}
       >
