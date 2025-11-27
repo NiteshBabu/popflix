@@ -61,12 +61,13 @@ const Home = () => {
       <Grid
         templateColumns={{
           base: 'repeat(auto-fit, minmax(180px,1fr))',
+          md: 'repeat(auto-fit, minmax(200px,1fr))',
         }}
         gap={'4'}
       >
         {data?.map((item, i) => (
           <>
-            <CardComponent isLoading={loading} key={i} item={item} />
+            <CardComponent isLoading={loading} key={i} indx={i} item={item} />
           </>
         ))}
       </Grid>

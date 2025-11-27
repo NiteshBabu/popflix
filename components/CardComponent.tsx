@@ -7,10 +7,12 @@ import { imagePath } from '../services/api'
 import { TMDBResponseType } from '../utils/types'
 
 const CardComponent = ({
+	indx,
 	item,
 	height = 355,
 	isLoading,
 }: {
+	indx: number
 	item: TMDBResponseType
 	height?: number
 	isLoading?: boolean
@@ -32,23 +34,23 @@ const CardComponent = ({
 					transition: 'transform 0.2s ease-in-out',
 					zIndex: '10',
 					'& .overlay': {
-						height: '30%',
+						height: '25%',
 						opacity: 1,
 					},
-				}}
-				>
+				}}>
 				<Box
 					backgroundImage={`https://ik.imagekit.io/rnuojrep8l${
 						item?.poster_path || item?.profile_path
-					}?tr=w-50,bl-2`}
+					}?tr=w-50,bl-0`}
 					backgroundSize='contain'
-					aspectRatio={2 / 3}
-					>
+					aspectRatio={2 / 3}>
 					<Image
 						src={`${imagePath}/${item?.poster_path || item?.profile_path}`}
 						alt={item?.title || item?.name}
 						fill
-						onLoad={() => setTimeout(() => setFetchingImg(false), 800)}
+						onLoad={() =>
+							setTimeout(() => setFetchingImg(false),500)
+						}
 						style={{
 							opacity: fetchingImg ? 0 : 1,
 							objectFit: 'contain',
@@ -95,8 +97,10 @@ const CardComponent = ({
 					p={'3px 6px'}
 					borderRadius={5}
 					bg={'rgba(0,0,0,0.4)'}>
-					<StarIcon fontSize={'small'} fill={'tomato'} />
-					<Text fontSize={'small'}>{item?.vote_average?.toFixed(1)}</Text>
+					<StarIcon fontSize={'small'} color={'gold'} />
+					<Text fontSize={'small'} fontWeight={'bold'}>
+						{item?.vote_average?.toFixed(1)}
+					</Text>
 				</Flex>
 			</Box>
 		</Link>
