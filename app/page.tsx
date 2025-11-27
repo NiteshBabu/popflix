@@ -24,7 +24,6 @@ const Home = () => {
       }
     })()
   }, [timeWindow])
-  console.log(data)
   return (
     <Container maxW={'container.xl'}>
       <Flex alignItems={'baseline'} gap={'4'} my={'10'}>
@@ -61,9 +60,7 @@ const Home = () => {
       </Flex>
       <Grid
         templateColumns={{
-          base: 'repeat(2, 1fr)',
-          md: 'repeat(4, 1fr)',
-          lg: 'repeat(5, 1fr)',
+          base: 'repeat(auto-fit, minmax(200px,1fr))',
         }}
         gap={'4'}
       >

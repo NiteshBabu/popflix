@@ -8,7 +8,7 @@ import { TMDBResponseType } from '../utils/types'
 
 const CardComponent = ({
 	item,
-	height,
+	height = 355,
 	isLoading,
 }: {
 	item: TMDBResponseType
@@ -21,7 +21,7 @@ const CardComponent = ({
 			? `${item?.media_type}/${item?.id}`
 			: `/info/${item?.media_type}/${item?.id}`
 
-	if (isLoading) return <Skeleton height={350} />
+	if (isLoading) return <Skeleton height={height} />
 	return (
 		<Link href={href} style={{ cursor: 'pointer' }}>
 			<Box
@@ -36,21 +36,22 @@ const CardComponent = ({
 						opacity: 1,
 					},
 				}}
-				overflow='hidden'
-				height={height ?? 340}>
+				>
 				<Box
 					backgroundImage={`https://ik.imagekit.io/rnuojrep8l${
 						item?.poster_path || item?.profile_path
-					}?tr=w-10,bl-8`}
-					backgroundSize='contain'>
+					}?tr=w-50,bl-2`}
+					backgroundSize='contain'
+					aspectRatio={2 / 3}
+					>
 					<Image
 						src={`${imagePath}/${item?.poster_path || item?.profile_path}`}
 						alt={item?.title || item?.name}
-						height={440}
-						width={300}
-						onLoad={() => setFetchingImg(false)}
+						fill
+						onLoad={() => setTimeout(() => setFetchingImg(false), 800)}
 						style={{
 							opacity: fetchingImg ? 0 : 1,
+							objectFit: 'contain',
 						}}
 					/>
 				</Box>
