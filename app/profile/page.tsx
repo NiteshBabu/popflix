@@ -9,12 +9,11 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import Protected from '../../components/HOC/Protected'
+import WatchlistCard from '../../components/WatchlistCard'
 import { useAuth } from '../../context/useAuth'
 import { useFirestore } from '../../services/firestore'
-import WatchlistCard from '../../components/WatchlistCard'
-import { redirect } from 'next/navigation'
-import Protected from '../../components/HOC/Protected'
 
 const ProfilePage = () => {
   const { getWatchlist } = useFirestore()
@@ -27,7 +26,6 @@ const ProfilePage = () => {
       getWatchlist(user?.uid)
         .then((data) => {
           setWatchlist(data)
-          console.log(data, 'data')
         })
         .catch((err) => {
           console.log(err, 'error')

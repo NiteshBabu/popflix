@@ -1,5 +1,5 @@
 'use client'
-import React, { Suspense, useEffect, useState } from 'react'
+import { CalendarIcon } from '@chakra-ui/icons'
 import {
   Box,
   CircularProgress,
@@ -10,17 +10,17 @@ import {
   Skeleton,
   Text,
 } from '@chakra-ui/react'
-import { CalendarIcon } from '@chakra-ui/icons'
+import Link from 'next/link'
+import { Suspense, useEffect, useState } from 'react'
+import CardComponent from '../../../components/CardComponent'
+import FullSpinner from '../../../components/FullSpinner'
 import {
   fetchPerson,
   imagePath,
   imagePathOriginal,
 } from '../../../services/api'
-import { CastDetails } from '../../../utils/types'
-import CardComponent from '../../../components/CardComponent'
 import { resolveRatingColor } from '../../../utils/helpers'
-import FullSpinner from '../../../components/FullSpinner'
-import Link from 'next/link'
+import { CastDetails } from '../../../utils/types'
 
 const YEARS = 10
 const TIMEDELTA = new Date()
@@ -34,13 +34,10 @@ function PeopleComponent({ params }) {
   useEffect(() => {
     ;(async () => {
       const castDetails = await fetchPerson(id)
-      console.log(castDetails);
-      
       setDetails(castDetails)
     })()
   }, [])
 
-  console.log(details)
 
   if (!details) return <FullSpinner />
   return (

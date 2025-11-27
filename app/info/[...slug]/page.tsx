@@ -1,12 +1,12 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { Box, Container } from '@chakra-ui/react'
-import { fetchCredits, fetchDetails, fetchVideos } from '../../../services/api'
-import DetailsComponent from '../../../components/DetailsPage/DetailsComponent'
+import { useEffect, useState } from 'react'
 import Cast from '../../../components/DetailsPage/CastComponent'
-import FullSpinner from '../../../components/FullSpinner'
-import { TMDBResponseType } from '../../../utils/types'
+import DetailsComponent from '../../../components/DetailsPage/DetailsComponent'
 import VideoComponent from '../../../components/DetailsPage/VideoComponent'
+import FullSpinner from '../../../components/FullSpinner'
+import { fetchCredits, fetchDetails, fetchVideos } from '../../../services/api'
+import { TMDBResponseType } from '../../../utils/types'
 
 const DetailsPage = ({ params }) => {
   const [type, id] = params.slug
@@ -25,6 +25,7 @@ const DetailsPage = ({ params }) => {
           fetchVideos(type, id),
         ])
         setDetails(detailsData)
+        console.log(details)
         setCast(creditsData.cast)
         setVideos(videos.results)
       } catch (error) {

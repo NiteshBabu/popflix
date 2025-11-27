@@ -1,4 +1,5 @@
 'use client'
+import { HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
   Box,
@@ -19,7 +20,6 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import { useAuth } from '../context/useAuth'
 
 const Navbar = () => {
@@ -30,7 +30,6 @@ const Navbar = () => {
   const handleGoogleLogin = async () => {
     try {
       await signInWithGoogle()
-      console.log('success')
     } catch (error) {
       console.log('errr', error)
     }

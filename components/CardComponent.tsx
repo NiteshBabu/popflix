@@ -1,26 +1,27 @@
-import { Box, Flex, Skeleton, Text } from '@chakra-ui/react'
-import { imagePath } from '../services/api'
 import { StarIcon } from '@chakra-ui/icons'
-import Link from 'next/link'
-import { TMDBResponseType } from '../utils/types'
+import { Box, Flex, Skeleton, Text } from '@chakra-ui/react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
+import { imagePath } from '../services/api'
+import { TMDBResponseType } from '../utils/types'
 
 const CardComponent = ({
 	item,
-	isLoading,
 	height,
+	isLoading,
 }: {
 	item: TMDBResponseType
-	isLoading?: boolean
 	height?: number
+	isLoading?: boolean
 }) => {
+	const [fetchingImg, setFetchingImg] = useState(true)
 	const href =
 		item?.media_type === 'person'
 			? `${item?.media_type}/${item?.id}`
 			: `/info/${item?.media_type}/${item?.id}`
 
 	if (isLoading) return <Skeleton height={350} />
-	console.log(item)
 	return (
 		<Link href={href} style={{ cursor: 'pointer' }}>
 			<Box
@@ -35,13 +36,24 @@ const CardComponent = ({
 						opacity: 1,
 					},
 				}}
+				overflow='hidden'
 				height={height ?? 340}>
-				<Image
-					src={`${imagePath}/${item?.poster_path || item?.profile_path}`}
-					alt={item?.title || item?.name}
-					fill
-         
-/>
+				<Box
+					backgroundImage={`https://ik.imagekit.io/rnuojrep8l${
+						item?.poster_path || item?.profile_path
+					}?tr=w-10,bl-8`}
+					backgroundSize='contain'>
+					<Image
+						src={`${imagePath}/${item?.poster_path || item?.profile_path}`}
+						alt={item?.title || item?.name}
+						height={440}
+						width={300}
+						onLoad={() => setFetchingImg(false)}
+						style={{
+							opacity: fetchingImg ? 0 : 1,
+						}}
+					/>
+				</Box>
 				<Box
 					className='overlay'
 					pos={'absolute'}

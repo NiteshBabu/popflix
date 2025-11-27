@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { db } from './firebase'
+import { useToast } from '@chakra-ui/react'
 import {
   addDoc,
   collection,
@@ -9,15 +9,14 @@ import {
   getDocs,
   setDoc,
 } from 'firebase/firestore'
-import { useToast } from '@chakra-ui/react'
 import { useCallback } from 'react'
+import { db } from './firebase'
 
 export const useFirestore = () => {
   const toast = useToast()
   const addDocument = async (collectionName, data) => {
     // Add a new document with a generated id.
     const docRef = await addDoc(collection(db, collectionName), data)
-    console.log('Document written with ID: ', docRef.id)
   }
 
   const addToWatchlist = async (userId, dataId, data) => {

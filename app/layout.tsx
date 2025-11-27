@@ -1,10 +1,5 @@
-'use client'
-import { Suspense } from 'react'
-import Theme from '../common/Theme'
-import FullSpinner from '../components/FullSpinner'
-import Navbar from '../components/Navbar'
-import { AuthProvider } from '../context/authProvider'
 import '../global.css'
+import Client from './client'
 
 export const metadata = {
 	title: 'Popflix By NiteshBabu',
@@ -32,12 +27,7 @@ export default function RootLayout({
 	return (
 		<html lang='en'>
 			<body>
-				<Theme>
-					<AuthProvider>
-						<Navbar />
-						<Suspense fallback={<FullSpinner />}>{children}</Suspense>
-					</AuthProvider>
-				</Theme>
+				<Client>{children}</Client>
 			</body>
 		</html>
 	)

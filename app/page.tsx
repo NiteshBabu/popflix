@@ -1,8 +1,8 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { Box, Container, Flex, Grid, Heading } from '@chakra-ui/react'
-import { fetchTrending } from '../services/api'
+import { useEffect, useState } from 'react'
 import CardComponent from '../components/CardComponent'
+import { fetchTrending } from '../services/api'
 import { TMDBResponseType } from '../utils/types'
 
 const Home = () => {
@@ -24,7 +24,7 @@ const Home = () => {
       }
     })()
   }, [timeWindow])
-
+  console.log(data)
   return (
     <Container maxW={'container.xl'}>
       <Flex alignItems={'baseline'} gap={'4'} my={'10'}>
