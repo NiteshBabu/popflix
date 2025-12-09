@@ -7,12 +7,10 @@ import { imagePath } from '../services/api'
 import { TMDBResponseType } from '../utils/types'
 
 const CardComponent = ({
-	indx,
 	item,
 	height = 355,
 	isLoading,
 }: {
-	indx: number
 	item: TMDBResponseType
 	height?: number
 	isLoading?: boolean

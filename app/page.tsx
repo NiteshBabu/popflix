@@ -67,7 +67,7 @@ const Home = () => {
       >
         {data?.map((item, i) => (
           <>
-            <CardComponent isLoading={loading} key={i} indx={i} item={item} />
+            <CardComponent isLoading={loading} key={i} item={item} />
           </>
         ))}
       </Grid>
