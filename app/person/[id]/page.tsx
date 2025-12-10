@@ -203,3 +203,5 @@ function PeopleComponent({ params }) {
 }
 
 export default PeopleComponent
+
+export const runtime = "edge"

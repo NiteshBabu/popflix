@@ -50,3 +50,5 @@ const DetailsPage = ({ params }) => {
 }
 
 export default DetailsPage
+
+export const runtime = "edge"

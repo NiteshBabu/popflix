@@ -1,5 +1,4 @@
 'use client'
-import { useEffect, useState } from 'react'
 import {
   Container,
   Flex,
@@ -7,15 +6,14 @@ import {
   Heading,
   Image,
   Input,
-  Skeleton,
-  Spinner,
+  Skeleton
 } from '@chakra-ui/react'
-import { fetchMultiSearch } from '../../services/api'
-import CardComponent from '../../components/CardComponent'
-import FullSpinner from '../../components/FullSpinner'
-import { useDebounce } from '../../hooks/useDebounce'
-import PaginationComponent from '../../components/PaginationComponent'
 import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import CardComponent from '../../components/CardComponent'
+import PaginationComponent from '../../components/PaginationComponent'
+import { useDebounce } from '../../hooks/useDebounce'
+import { fetchMultiSearch } from '../../services/api'
 
 const Search = ({ searchParams }) => {
   const { q, page } = searchParams
@@ -127,3 +125,5 @@ const Search = ({ searchParams }) => {
 }
 
 export default Search
+
+export const runtime = 'edge'
